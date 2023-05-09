@@ -2,10 +2,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.views import View
 from .models import *
-from django.db.models import Avg
 from .forms import *
 from django.urls import reverse, reverse_lazy
-import datetime
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
@@ -46,3 +44,42 @@ class CreateUserView(FormView):
             email=form.cleaned_data['email']
         )
         return super().form_valid(form)
+
+
+class CreateKennelView(View):
+    def get(self, request):
+        form = KennelForm()
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_kennel.html', ctx)
+
+    def post(self, request):
+        form = KennelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_kennel.html', ctx)
+
+
+
+class CreateDogView(View):
+    def get(self, request):
+        form = DogForm()
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_dog.html', ctx)
+
+    def post(self, request):
+        form = DogForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_dog.html', ctx)

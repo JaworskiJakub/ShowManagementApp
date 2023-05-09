@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django import forms
+from .models import *
 
 
 class LoginForm(forms.Form):
@@ -32,3 +33,16 @@ class UserForm(forms.Form):
         if data['password'] != data['password_rep']:
             raise forms.ValidationError('Wprowadzone hasła nie pasują do siebie')
         return data
+
+
+class KennelForm(forms.ModelForm):
+    class Meta:
+        model = Kennel
+        fields = '__all__'
+
+
+class DogForm(forms.ModelForm):
+    class Meta:
+        model = Dog
+        fields = '__all__'
+
