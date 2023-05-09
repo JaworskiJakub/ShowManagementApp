@@ -1,1 +1,1 @@
-# DogShowApp
+# ShowManagementApp
