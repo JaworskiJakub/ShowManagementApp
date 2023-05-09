@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    {% block head %}
+    {% endblock %}
+    <style>
+
+    </style>
+</head>
+<body>
+<h2>DOG SHOW MANAGEMENT APPLICATION</h2>
+{% block content %}
+{% endblock %}
+<footer>
+    {% if request.user.is_authenticated %}
+        Logged user:
+        <b>{{ request.user.username }}</b>
+        <button><a href="{% url 'logout' %}">Logout</a></button>
+    {% else %}
+        <button><a href="{% url 'login' %}">Login</a></button>
+        <button><a href="{% url 'add_user' %}">Create account</a></button>
+    {% endif %}
+</footer>
+</body>
+</html>
