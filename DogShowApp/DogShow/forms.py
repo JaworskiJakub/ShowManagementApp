@@ -46,3 +46,11 @@ class DogForm(forms.ModelForm):
         model = Dog
         fields = '__all__'
 
+
+class DogShowForm(forms.ModelForm):
+    class Meta:
+        model = DogShow
+        fields = '__all__'
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'})
+        }

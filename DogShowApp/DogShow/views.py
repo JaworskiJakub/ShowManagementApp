@@ -7,6 +7,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 class IndexView(View):
@@ -65,7 +66,6 @@ class CreateKennelView(View):
         return render(request, 'add_kennel.html', ctx)
 
 
-
 class CreateDogView(View):
     def get(self, request):
         form = DogForm()
@@ -83,3 +83,38 @@ class CreateDogView(View):
             'form': form
         }
         return render(request, 'add_dog.html', ctx)
+
+
+class CreateShowView(PermissionRequiredMixin, View):
+
+    permission_required = 'DogShow.add_dogshow'
+    login_url = reverse_lazy('login')
+
+    def get(self, request):
+        form = DogShowForm
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_dogshow.html', ctx)
+
+    def post(self, request):
+        form = DogShowForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('show_list')
+        ctx = {
+            'form': form
+        }
+        return render(request, 'add_dogshow.html', ctx)
+
+
+class ShowListView(View):
+    def get(self, request):
+        shows = DogShow.objects.all().order_by('date')
+        ctx = {
+            'shows': shows
+        }
+        return render(request, 'show_list.html', ctx)
+
+    def post(self, request):
+        pass

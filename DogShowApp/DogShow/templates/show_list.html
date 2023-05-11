@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Dog Show list:</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>City</th>
+            <th>Name</th>
+            <th>Range</th>
+        </tr>
+        {% for show in shows %}
+            <tr>
+                <td>{{ show.date }}</td>
+                <td>{{ show.city }}</td>
+                <td>{{ show.name }}</td>
+                <td>{{ show.range }}</td>
+            </tr>
+        {% empty %}
+            There are no planned dog shows.
+        {% endfor %}
+    </table>
+    <br>
+    {% if request.user.is_authenticated %}
+    <button><a href="{% url 'add_show' %}">Add show</a></button>
+    {% endif %}
+{% endblock %}

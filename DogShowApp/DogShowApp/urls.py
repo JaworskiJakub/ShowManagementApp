@@ -25,4 +25,6 @@ urlpatterns = [
     path('add_user/', CreateUserView.as_view(), name='add_user'),
     path('add_kennel/', CreateKennelView.as_view(), name='add_kennel'),
     path('add_dog/', CreateDogView.as_view(), name='add_dog'),
+    path('add_show/', CreateShowView.as_view(), name='add_show'),
+    path('show_list/', ShowListView.as_view(), name='show_list')
 ]
